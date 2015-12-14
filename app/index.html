@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="myapp">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Type Show</title>
+
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+        <!-- endbower -->
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+
+    <body ng-controller="MainCtrl">
+      <div class="container" ng-if="edit">
+        <div class="header">
+          <h3 class="text-muted">Type Show</h3>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-default btn-sm">
+            <i class="glyphicon glyphicon-plus"></i><span>Add</span>
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" ng-click="run()">
+            <i class="glyphicon glyphicon-play"></i><span>Run</span>
+          </button>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-md-2">
+            <h4>Slides</h4>
+            
+            <ul class="list-unstyled">
+              <li ng-repeat="itm in texts">
+                <a href="javascript:void(0)" ng-click="load(itm)" >
+                  {{ itm.title }}
+                </a>
+                <i class="glyphicon glyphicon-arrow-left" ng-show="itm.selected"></i>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-10">
+            <ul class="nav nav-tabs">
+              <li role="presentation" ng-class="{ active: view === 'view'}">
+                <a href="javascript:void(0)">View</a>
+              </li>
+              <li role="presentation" ng-class="{ active: view === 'compose'}">
+                <a href="javascript:void(0)">Compose</a>
+              </li>
+            </ul>
+            <div ng-show="view ==='view'" id="markdown">
+
+            </div>
+            <div ng-show="view === 'compose'">
+              <h5 ng-show="compose.mode === 'new'">Add New</h5>
+              <h5 ng-show="compose.mode === 'edit'">Add New</h5>
+              <div>
+                <label>Title</label>
+                <div>
+                  <input type="text" ng-model="compose.title" class="form-control"/>
+                </div>
+              </div>
+              <div>
+                <label>Content</label>
+                <div>
+                  <textarea ng-model="content" rows="10" class="form-control" ng-model="compose.content"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="!edit" ng-init="initTyped()">
+        <span id="preview" class="typed"></span>
+      </div>
+
+      <!-- bower:js -->
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+      <script src="bower_components/angular/angular.js"></script>
+      <script src="bower_components/typed.js/dist/typed.min.js"></script>
+      <script src="bower_components/markdown/lib/markdown.js"></script>
+      <!-- endbower -->
+      <script src="scripts/main.js"></script>
+    </body>
+</html>

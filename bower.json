@@ -1,0 +1,26 @@
+{
+  "name": "typed-show",
+  "description": "a quick fiddle",
+  "version": "0.0.0",
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8",
+    "typed.js": "~1.1.1",
+    "markdown": "~0.5.0"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap-theme.css",
+        "dist/js/bootstrap.js",
+        "dist/fonts/*"
+      ]
+    },
+    "markdown" : {
+      "main" : [
+        "lib/markdown.js"
+      ]
+    }
+  }
+}
