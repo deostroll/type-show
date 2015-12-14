@@ -60,7 +60,7 @@ angular.module('myapp', [])
       $('#preview').typed({
         strings: $scope.texts.map(function(txt){ return markdown.toHTML(txt.content); }),
         typeSpeed: 0,
-        content: 'html'
+        contentType: 'html'
       });
     };
 
@@ -92,16 +92,20 @@ angular.module('myapp', [])
         var val = txt.value,
           start = txt.selectionStart,
           end = txt.selectionEnd;
-        if(val.length) {
-          txt.value = val.substring(0, start)
-            + '\t'
-            + val.substring(end);
-        }
-        else {
-          txt.value = '\n\t';
-        }
+        // if(val.length) {
+        //   txt.value = val.substring(0, start)
+        //     + '\t'
+        //     + val.substring(end);
+        // }
+        // else {
+        //   txt.value = '\n\t';
+        // }
 
-        txt.focus();
+        txt.value = val.substring(0, start)
+          + '\t'
+          + val.substring(end);
+
+        // txt.focus();
         txt.selectionStart = txt.selectionEnd = start + 1;
         e.preventDefault();
       }

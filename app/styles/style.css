@@ -25,6 +25,11 @@
     100% { opacity:1; }
 }
 
+#preview {
+  font-size:16pt
+}
 #preview pre {
   font-size: 20pt;
+  font-family: 'Courier New';
+  color: red;
 }

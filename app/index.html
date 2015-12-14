@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Type Show</title>
+        <title>Typed Show</title>
 
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -16,7 +16,7 @@
     <body ng-controller="MainCtrl">
       <div class="container" ng-if="edit">
         <div class="header">
-          <h3 class="text-muted">Type Show</h3>
+          <h3 class="text-muted">Typed Show</h3>
         </div>
 
         <div>
@@ -75,12 +75,10 @@
                       <div>
                         <textarea ng-model="selected.content"
                           rows="10" class="form-control"
+                          ng-trim="false"
                           ng-model="selected.content" ng-keydown="processKeydown($event)"></textarea>
                       </div>
                     </div>
-                    <pre>
-{{ selected.content | json }}
-                    </pre>
                   </div>
                   <div ng-show="view === 'view'" ng-init="preview()">
                     <div class="md">
@@ -88,10 +86,6 @@
                   </div>
                 </div>
             </div>
-
-            <br/>
-
-
           </div>
         </div>
       </div>
