@@ -20,7 +20,7 @@
         </div>
 
         <div>
-          <button type="button" class="btn btn-default btn-sm">
+          <button type="button" class="btn btn-default btn-sm" ng-click="add()">
             <i class="glyphicon glyphicon-plus"></i><span>Add</span>
           </button>
           <button type="button" class="btn btn-primary btn-sm" ng-click="run()">
@@ -31,49 +31,74 @@
         <div class="row">
           <div class="col-md-2">
             <h4>Slides</h4>
-            
+            <p ng-show="!texts.length">
+              No slides...add one
+            </p>
             <ul class="list-unstyled">
               <li ng-repeat="itm in texts">
                 <a href="javascript:void(0)" ng-click="load(itm)" >
                   {{ itm.title }}
                 </a>
-                <i class="glyphicon glyphicon-arrow-left" ng-show="itm.selected"></i>
+                <i class="glyphicon glyphicon-arrow-left" ng-show="itm === selected"></i>
               </li>
             </ul>
           </div>
           <div class="col-md-10">
-            <ul class="nav nav-tabs">
-              <li role="presentation" ng-class="{ active: view === 'view'}">
-                <a href="javascript:void(0)">View</a>
-              </li>
-              <li role="presentation" ng-class="{ active: view === 'compose'}">
-                <a href="javascript:void(0)">Compose</a>
-              </li>
-            </ul>
-            <div ng-show="view ==='view'" id="markdown">
+            <div ng-show="!selected">
+              <p>
+                Nothing to show...
+              </p>
+            </div>
+            <div ng-show="selected">
+                <div class="controls">
+                    <button class="btn btn-default" type="button" ng-click="remove(selected)">Delete</button>
+                </div>
+                <br>
+                <div class="editor">
+                  <ul class="nav nav-tabs">
+                    <li role="presentation" ng-class="{ active: view === 'compose'}">
+                      <a href="javascript:void(0)" ng-click="switch('compose')">Compose</a>
+                    </li>
+                    <li role="presentation" ng-class="{ active: view === 'view'}">
+                      <a href="javascript:void(0)" ng-click="switch('view')">Preview</a>
+                    </li>
+                  </ul>
+                  <div ng-show="view === 'compose'">
+                    <div>
+                      <label>Title</label>
+                      <div>
+                        <input type="text" ng-model="selected.title" class="form-control"/>
+                      </div>
+                    </div>
+                    <div>
+                      <label>Content</label>
+                      <div>
+                        <textarea ng-model="selected.content"
+                          rows="10" class="form-control"
+                          ng-model="selected.content" ng-keydown="processKeydown($event)"></textarea>
+                      </div>
+                    </div>
+                    <pre>
+{{ selected.content | json }}
+                    </pre>
+                  </div>
+                  <div ng-show="view === 'view'" ng-init="preview()">
+                    <div class="md">
+                    </div>
+                  </div>
+                </div>
+            </div>
 
-            </div>
-            <div ng-show="view === 'compose'">
-              <h5 ng-show="compose.mode === 'new'">Add New</h5>
-              <h5 ng-show="compose.mode === 'edit'">Add New</h5>
-              <div>
-                <label>Title</label>
-                <div>
-                  <input type="text" ng-model="compose.title" class="form-control"/>
-                </div>
-              </div>
-              <div>
-                <label>Content</label>
-                <div>
-                  <textarea ng-model="content" rows="10" class="form-control" ng-model="compose.content"></textarea>
-                </div>
-              </div>
-            </div>
+            <br/>
+
+
           </div>
         </div>
       </div>
 
-      <div ng-if="!edit" ng-init="initTyped()">
+      <div ng-if="!edit" ng-init="initTyped()" class="container">
+        <br>
+        <br>
         <span id="preview" class="typed"></span>
       </div>
 

@@ -24,3 +24,7 @@
     50% { opacity:0; }
     100% { opacity:1; }
 }
+
+#preview pre {
+  font-size: 20pt;
+}

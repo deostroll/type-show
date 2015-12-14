@@ -14,13 +14,13 @@ angular.module('myapp', [])
 
     function addSlide(title, content) {
         counter++;
-        $scope.texts.push({
+        var len = $scope.texts.push({
           id: counter,
           title: title,
           content: content,
-          markdown: markdown.toHTML(content),
           selected: false
         });
+        return $scope.texts[len - 1];
     };
 
     function updateSlide(id, title, content) {
@@ -33,8 +33,11 @@ angular.module('myapp', [])
       });
     }
 
-    function removeSlide(index) {
-      $scope.texts.splice(index, 1);
+    function removeSlide(item) {
+      var idx = $scope.indexOf(item);
+      if(idx === -1) return;
+      $scope.texts.splice(idx, 1);
+      $scope.selected = null;
     }
 
     function select(item) {
@@ -47,14 +50,15 @@ angular.module('myapp', [])
         }
       });
     }
-    $scope.add = function () {
-      addSlide($scope.title, $scope.content);
+
+    $scope.add = function() {
+      var title = 'Slide ' + (counter + 1);
+      $scope.selected = addSlide(title, '');
     };
-    //var preview = $('#preview');
+
     var showTyped = function() {
-      // console.log('showTyped', $('#preview'));
       $('#preview').typed({
-        strings: $scope.texts.map(function(txt){ return txt.markdown; }),
+        strings: $scope.texts.map(function(txt){ return markdown.toHTML(txt.content); }),
         typeSpeed: 0,
         content: 'html'
       });
@@ -73,16 +77,42 @@ angular.module('myapp', [])
 
     $scope.initTyped = showTyped;
 
-    $scope.select = select;
+    $scope.selected = null;
 
     $scope.load = function(itm) {
-      var idx = $scope.texts.indexOf(itm);
-      if(idx > -1) {
-        var md = $scope.texts[idx].markdown;
-        $('#markdown').html(md);
-        $scope.view = 'view';
+      $scope.selected = itm;
+      $scope.compose.view = 'compose';
+    };
+
+    $scope.remove = removeSlide;
+
+    $scope.processKeydown = function(e) {
+      if(e.keyCode === 9) {
+        var txt = e.target;
+        var val = txt.value,
+          start = txt.selectionStart,
+          end = txt.selectionEnd;
+        if(val.length) {
+          txt.value = val.substring(0, start)
+            + '\t'
+            + val.substring(end);
+        }
+        else {
+          txt.value = '\n\t';
+        }
+
+        txt.focus();
+        txt.selectionStart = txt.selectionEnd = start + 1;
+        e.preventDefault();
       }
-    }
-    addSlide('Code 1','\t\t\t\tgit clone https://github.com/deostroll/generator-konva.git');
-    addSlide('Code 2','This is great _news_');
+    };
+
+    $scope.switch = function(vw) {
+      $scope.view = vw;
+      if (vw === 'view') {
+        setTimeout(function(){
+          $('.md').html(markdown.toHTML($scope.selected.content));
+        })
+      }
+    };
   });
