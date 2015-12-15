@@ -34,7 +34,7 @@ angular.module('myapp', [])
     }
 
     function removeSlide(item) {
-      var idx = $scope.indexOf(item);
+      var idx = $scope.texts.indexOf(item);
       if(idx === -1) return;
       $scope.texts.splice(idx, 1);
       $scope.selected = null;
