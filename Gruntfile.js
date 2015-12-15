@@ -3,6 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-release');
     grunt.initConfig({
         watch: {
             'app': {
@@ -27,6 +28,11 @@ module.exports = function (grunt) {
                 'hostname': 'localhost'
             },
             'app': {}
+        },
+        release: {
+          options: {
+            npm: false
+          }
         }
     });
     grunt.registerTask('default', [

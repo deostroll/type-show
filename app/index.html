@@ -18,18 +18,17 @@
         <div class="header">
           <h3 class="text-muted">Typed Show</h3>
         </div>
-
-        <div>
-          <button type="button" class="btn btn-default btn-sm" ng-click="add()">
-            <i class="glyphicon glyphicon-plus"></i><span>Add</span>
-          </button>
-          <button type="button" class="btn btn-primary btn-sm" ng-click="run()">
-            <i class="glyphicon glyphicon-play"></i><span>Run</span>
-          </button>
-        </div>
         <hr/>
         <div class="row">
           <div class="col-md-2">
+            <div>
+              <button type="button" class="btn btn-default btn-sm" ng-click="add()">
+                <i class="glyphicon glyphicon-plus"></i><span>Add</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" ng-click="run()">
+                <i class="glyphicon glyphicon-play"></i><span>Run</span>
+              </button>
+            </div>
             <h4>Slides</h4>
             <p ng-show="!texts.length">
               No slides...add one
@@ -46,7 +45,7 @@
           <div class="col-md-10">
             <div ng-show="!selected">
               <p>
-                Nothing to show...
+                No slides to show here...
               </p>
             </div>
             <div ng-show="selected">
