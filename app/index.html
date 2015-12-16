@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Typed Show</title>
+        <title>Typed Show - {{ title }}</title>
 
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -20,7 +20,8 @@
         </div>
         <hr/>
         <div class="row">
-          <div class="col-md-2">
+          <!-- Side bar -->
+          <div class="col-xs-3">
             <div>
               <button type="button" class="btn btn-default btn-sm" ng-click="add()">
                 <i class="glyphicon glyphicon-plus"></i><span>Add</span>
@@ -42,7 +43,15 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-10">
+          <!-- Editor area -->
+          <div class="col-xs-9">
+            <div>
+              <input type="text"
+                ng-model="label" class="form-control"
+                placeholder="Enter title (optional)"/>
+                {{ label }}
+            </div>
+            <br>
             <div ng-show="!selected">
               <p>
                 No slides to show here...
@@ -89,7 +98,11 @@
         </div>
       </div>
 
+      <!-- preview area -->
       <div ng-if="!edit" ng-init="initTyped()" class="container">
+        <div>
+          {{ label }}
+        </div>
         <br>
         <br>
         <span id="preview" class="typed"></span>

@@ -1,5 +1,8 @@
 angular.module('myapp', [])
-  .controller('MainCtrl', function($scope, $document, $timeout){
+  .run(function($rootScope){
+    $rootScope.title = 'foo';
+  })
+  .controller('MainCtrl', function($scope, $document, $timeout, $rootScope){
     var counter = 0;
     $scope.texts = [];
     $scope.edit = true;
@@ -116,7 +119,14 @@ angular.module('myapp', [])
       if (vw === 'view') {
         setTimeout(function(){
           $('.md').html(markdown.toHTML($scope.selected.content));
-        })
+        });
       }
     };
+    $scope.label = 'Show Title';
+    $scope.$watch('label', function(){
+      console.log('foo', arguments);
+      $rootScope.title = $scope.label;
+
+    });
+
   });
