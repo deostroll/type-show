@@ -1,7 +1,4 @@
 angular.module('myapp', [])
-  .run(function($rootScope){
-    $rootScope.title = 'foo';
-  })
   .controller('MainCtrl', function($scope, $document, $timeout, $rootScope){
     var counter = 0;
     $scope.texts = [];
@@ -78,7 +75,10 @@ angular.module('myapp', [])
       });
     };
 
-    $scope.initTyped = showTyped;
+    $scope.initTyped = function() {
+      labelWatchUnbind();
+      showTyped();
+    };
 
     $scope.selected = null;
 
@@ -122,11 +122,26 @@ angular.module('myapp', [])
         });
       }
     };
-    $scope.label = 'Show Title';
-    $scope.$watch('label', function(){
-      console.log('foo', arguments);
-      $rootScope.title = $scope.label;
+    // $scope.label = 'Show Title';
+    // $scope.$watch('label', function(){
+    //   console.log('foo', arguments);
+    //   $rootScope.title = $scope.label;
+    //
+    // });
 
-    });
-
+    var labelWatchUnbind;
+    $scope.onEdit = function() {
+      // console.log('Edit',$scope.$id, $scope.label);
+      // labelWatch = $scope.$watch('label', function(newVal){
+      //   console.log('Watch:', newVal);
+      // });
+      // console.log($scope);
+      $scope.$$childHead.label = 'Show Unnamed'
+      labelWatchUnbind = $scope.$watch(function(){
+        return $scope.$$childHead.label;
+      }, function(newVal){
+        // console.log('Watch:', newVal);
+        $rootScope.title = newVal;
+      });
+    };
   });
